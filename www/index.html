@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>EHS Daily Report</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="exceljs.min.js"></script>
+<style>
+:root{--bg:#f6f7f4;--card:#fff;--tx:#1d2521;--mu:#66716b;--ac:#1f7a4d;--bd:#dde2dd;--rd:#c0392b;--am:#b7791f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141a17;--card:#1e2622;--tx:#eaf0ec;--mu:#98a59d;--ac:#3fb27a;--bd:#33403a;--rd:#ef6b5b;--am:#e0a84a}}
+:root[data-theme="dark"]{--bg:#141a17;--card:#1e2622;--tx:#eaf0ec;--mu:#98a59d;--ac:#3fb27a;--bd:#33403a;--rd:#ef6b5b;--am:#e0a84a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,-apple-system,"Noto Sans Tamil",sans-serif;padding-bottom:70px}
+header{padding:14px 16px 6px;font-weight:700;font-size:18px}
+nav{display:flex;gap:6px;padding:6px 12px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+nav button{flex:1;padding:9px 4px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;font-weight:600}
+nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+#v{padding:8px 12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin:8px 0}
+label{display:block;font-size:12px;color:var(--mu);margin:10px 0 3px}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+textarea{min-height:70px}
+button.b{padding:10px 14px;border:0;border-radius:10px;background:var(--ac);color:#fff;font-weight:600;font-size:14px}
+button.g{background:transparent;color:var(--tx);border:1px solid var(--bd)}button.r{background:var(--rd)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+img.p{width:100%;max-height:200px;object-fit:cover;border-radius:8px;margin-top:6px}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:12px;font-weight:600;border:1px solid var(--bd)}
+.Open{color:var(--rd)}.Closed{color:var(--ac)}.Prog{color:var(--am)}
+.mu{color:var(--mu);font-size:13px}
+.toast{position:fixed;left:12px;right:12px;bottom:calc(80px + env(safe-area-inset-bottom,0px));background:#222;color:#fff;padding:12px 14px;border-radius:10px;z-index:20;display:none;font-size:14px}.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));padding:14px 18px;border-radius:99px;box-shadow:0 4px 14px #0004}
+</style></head><body>
+<header>🦺 EHS Daily Report</header>
+<nav><button data-t="obs">Observations</button><button data-t="memo">Memos</button><button data-t="exp">Excel</button></nav>
+<div id="v"></div><div class="toast" id="toast"></div>
+<script>
+const REF={subject:"பொருள்: மின் மோட்டார் மீது அமர்ந்து ஓய்வெடுப்பது தொடர்பாக",
+body:"தொழிற்சாலையில் பணிபுரியும் போது, பணியாளர் ஒருவர் மின் மோட்டார் மீது அமர்ந்து ஓய்வெடுப்பது கவனிக்கப்பட்டுள்ளது. மோட்டார் மற்றும் அதனுடன் இணைக்கப்பட்டுள்ள மின்சார உபகரணங்கள் பணியாளர்கள் அமர்வதற்காக பயன்படுத்தப்படக்கூடாது. இயந்திரம் திடீரென இயக்கப்பட்டால் அல்லது எதிர்பாராத விதமாக செயல்பட்டால், கீழே விழுதல், சிக்கிக்கொள்ளுதல் மற்றும் காயம் ஏற்படுவதற்கான வாய்ப்புகள் உள்ளன.\n\nமேலும், இயந்திரத்தின் மீது அமர்வதால் இயந்திரம், மின்சார கேபிள் மற்றும் அதனுடன் இணைக்கப்பட்டுள்ள உபகரணங்களுக்கு சேதம் ஏற்படக்கூடும். குறிப்பிட்ட இடத்தில் அமர்ந்திருப்பதால் அவசரகால நேரங்களில் பணியாளர்களின் பாதுகாப்பான நகர்விற்கும் இடையூறு ஏற்பட வாய்ப்புள்ளது.\n\nஎனவே, பணியாளர்கள் இயந்திரங்கள் மற்றும் மின்சார உபகரணங்களின் மீது அமர்வது அல்லது ஓய்வெடுப்பது முற்றிலும் தவிர்க்கப்பட வேண்டும். ஓய்வு எடுக்க வேண்டிய நேரங்களில், நிறுவனத்தால் ஏற்பாடு செய்யப்பட்டுள்ள பாதுகாப்பான ஓய்வு இடங்களை மட்டுமே பயன்படுத்த வேண்டும்.\n\nஇனிமேல் இதுபோன்ற பாதுகாப்பு விதிமீறல்கள் நடைபெறாமல் அனைவரும் கவனமாக இருக்க வேண்டும். மீண்டும் இதுபோன்ற விதிமீறல் ஏற்பட்டால், நிறுவன விதிமுறைகளின்படி உரிய நடவடிக்கை எடுக்கப்படும்."};
+const $=s=>document.querySelector(s),K='ehs_v1';
+let _tt;window.alert=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(_tt);_tt=setTimeout(()=>t.style.display='none',8000)};
+const loc=()=>new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let S={obs:[],memos:[]},tab='obs',ed=null,md=null,fd=loc();
+try{S=JSON.parse(localStorage.getItem(K))||S}catch(e){}
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){alert('Storage full – export to Excel and delete old entries.')}}
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+const dmy=d=>d?d.split('-').reverse().join('/'):'';
+function dur(a,b){let m=Math.max(0,Math.floor(((b||Date.now())-a)/6e4)),d=Math.floor(m/1440),h=Math.floor(m%1440/60);return (d?d+'d ':'')+h+'h '+m%60+'m'}
+function compress(file){return new Promise(res=>{const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const s=Math.min(1,520/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;c.getContext('2d').drawImage(i,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.65))};i.src=r.result};r.readAsDataURL(file)})}
+function d2b(u){const b=atob(u.split(',')[1]),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return new Blob([a],{type:'image/jpeg'})}
+const CP=()=>window.Capacitor?.Plugins||{};
+const b64=b=>new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result.split(',')[1]);f.readAsDataURL(b)});
+const DL={save:async({filename,data})=>{const blob=new Blob([data]),P=CP();
+ if(P.Filesystem&&P.Share){await P.Filesystem.writeFile({path:filename,data:await b64(blob),directory:'CACHE'});const {uri}=await P.Filesystem.getUri({path:filename,directory:'CACHE'});
+  try{await P.Share.share({title:filename,files:[uri],dialogTitle:'Save to Drive / share / print'})}catch(e){throw{code:'declined'}}}
+ else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.click()}}};
+async function cap(n){return n=='downloads'?DL:null}
+
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;ed=md=null;draw()});
+document.addEventListener('input',e=>{const k=e.target.dataset.k,o=e.target.dataset.o=='m'?md:ed;if(k&&o)o[k]=e.target.value});
+setInterval(()=>{if(tab=='memo'&&!md)draw()},60000);
+
+function draw(){document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==tab));
+ $('#v').innerHTML=md?memoForm():ed?obsForm():tab=='obs'?obsList():tab=='memo'?memoList():expView()}
+
+/* ---------- Observations ---------- */
+function obsList(){const L=S.obs.filter(o=>o.date==fd);
+ return `<div class="row" style="margin:0"><input type="date" value="${fd}" onchange="fd=this.value;draw()"></div>`+
+ (L.length?L.map((o,i)=>{const od=o.status!='Closed'&&o.due&&o.due<loc(),m=S.memos.filter(x=>x.obsId==o.id).length;
+ return `<div class="card">${o.before?`<img class="p" src="${o.before}">`:''}<b>${i+1}. ${esc(o.issue)||'(no issue yet)'}</b>
+ <div class="mu">${esc(o.area)} · ${esc(o.person)}</div>
+ <div style="margin-top:6px"><span class="tag ${o.status=='Closed'?'Closed':o.status=='Open'?'Open':'Prog'}">${o.status}</span>
+ ${od?'<span class="tag Open">Overdue</span>':''} ${m?`<span class="tag">📝 ${m} memo</span>`:''} <span class="mu">Due ${dmy(o.due)}</span></div>
+ <div class="row"><button class="b g" onclick="editObs('${o.id}')">Edit</button><button class="b" onclick="newMemo('${o.id}')">Issue memo</button>${o.before||o.after?`<button class="b g" onclick="savePhotos('${o.id}')">💾 Save photos</button>`:''}</div></div>`}).join(''):'<p class="mu">No observations for this date.</p>')+
+ `<button class="b fab" onclick="editObs()">＋ New</button>`}
+function editObs(id){ed=id?{...S.obs.find(o=>o.id==id)}:{id:uid(),date:fd,area:'',before:'',after:'',issue:'',desc:'',action:'',person:'',due:'',status:'Open',_new:1};draw();scrollTo(0,0)}
+function obsForm(){const o=ed,f=(k,l,t='text')=>`<label>${l}</label><input type="${t}" data-k="${k}" value="${esc(o[k])}">`;
+ return `<div class="card"><b>${o._new?'New':'Edit'} observation</b>${f('area','Area of inspection')}
+ <label>Before image</label><input type="file" accept="image/*" onchange="pick(this,'before')">${o.before?`<img class="p" src="${o.before}">`:''}
+ <label>Issue</label><input data-k="issue" value="${esc(o.issue)}"><label>Description</label><textarea data-k="desc">${esc(o.desc)}</textarea>
+ <label>Action to be taken</label><textarea data-k="action">${esc(o.action)}</textarea>${f('person','Responsible person')}${f('due','Completion date','date')}
+ <label>Status</label><select data-k="status">${['Open','In Progress','Closed'].map(s=>`<option ${o.status==s?'selected':''}>${s}</option>`).join('')}</select>
+ <label>After image</label><input type="file" accept="image/*" onchange="pick(this,'after')">${o.after?`<img class="p" src="${o.after}">`:''}
+ <div class="row"><button class="b" onclick="saveObs()">Save</button><button class="b g" onclick="ed=null;draw()">Cancel</button>${o._new?'':'<button class="b r" onclick="delObs()">Delete</button>'}</div></div>`}
+async function pick(el,k){if(el.files[0]){ed[k]=await compress(el.files[0]);draw()}}
+function saveObs(){const o={...ed};delete o._new;const i=S.obs.findIndex(x=>x.id==o.id);i<0?S.obs.push(o):S.obs[i]=o;
+ if(o.status=='Closed')S.memos.forEach(m=>{if(m.obsId==o.id&&!m.closedAt)m.closedAt=Date.now()});
+ fd=o.date;save();ed=null;draw()}
+function delObs(){if(!ed._c){ed._c=1;return alert('Tap Delete again to confirm.')}if(ed._c){S.obs=S.obs.filter(x=>x.id!=ed.id);save();ed=null;draw()}}
+/* ---------- Memos ---------- */
+function newMemo(id){const o=S.obs.find(x=>x.id==id);let t=null;try{t=JSON.parse(localStorage.getItem('ehs_tpl'))}catch(e){}md={id:uid(),obsId:id,name:o.person,emp:'',dept:'',subject:t?.subject||REF.subject,body:t?.body||REF.body,issued:Date.now()};draw();scrollTo(0,0)}
+function empFill(v){md.emp=v.trim();const p=[...S.memos].reverse().find(x=>x.emp.toLowerCase()==md.emp.toLowerCase());if(p){md.name=p.name;md.dept=p.dept}draw()}
+function memoForm(){const m=md,o=S.obs.find(x=>x.id==m.obsId);
+ return `<div class="card"><b>Issue memo</b><div class="mu">${esc(o?.issue)}</div>
+ <label>Name</label><input data-o="m" data-k="name" value="${esc(m.name)}"><label>Employee ID</label><input data-o="m" data-k="emp" value="${esc(m.emp)}" onchange="empFill(this.value)">${m.emp&&S.memos.some(x=>x.emp==m.emp)?`<div class="mu" style="color:var(--rd)">⚠ ${S.memos.filter(x=>x.emp==m.emp).length} earlier memo(s) already issued to this ID</div>`:''}
+ <label>Section / Department</label><input data-o="m" data-k="dept" value="${esc(m.dept)}">
+ <label>Subject (Tamil)</label><input data-o="m" data-k="subject" value="${esc(m.subject)}"><label>Body (Tamil)</label><textarea data-o="m" data-k="body" style="min-height:260px">${esc(m.body)}</textarea>
+ <div class="mu">The text starts as your sample memo (or the last memo you issued). Edit the subject and body for this issue; your last version is remembered for next time.</div>
+ <div class="row"><button class="b" onclick="saveMemo()">Issue &amp; start tracking</button><button class="b g" onclick="md=null;draw()">Cancel</button></div></div>`}
+function saveMemo(){if(!md.name||!md.emp)return alert('Name and Employee ID are required.');try{localStorage.setItem('ehs_tpl',JSON.stringify({subject:md.subject,body:md.body}))}catch(e){}md.issued=Date.now();md.closedAt=null;S.memos.push({...md});save();dlMemo(md);md=null;tab='memo';draw()}
+function memoHTML(m){const d=new Date(m.issued).toLocaleDateString('en-GB');return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Memo</title><style>body{font-family:'Noto Sans Tamil',Latin,sans-serif;max-width:720px;margin:30px auto;padding:0 20px;line-height:1.8}h3,h4{text-align:center;margin:4px}.d{text-align:right}p{text-align:justify;text-indent:2em}.s{text-align:right;margin-top:60px}.np{padding:10px 18px;font-size:16px}@media print{.np{display:none}}</style></head><body><button class="np" onclick="print()">🖨 Print memo</button><h3>R.K. INDUSTRIES - IV,</h3><h3>PALLAVARAM</h3><h4><u>மெமோ</u></h4><div class="d">${d}</div><div>To,<br>${esc(m.name)} - ${esc(m.emp)}<br>${esc(m.dept)}<br><b><u>${esc(m.subject)}</u></b></div>${m.body.split(/\n\s*\n/).map(p=>`<p>${esc(p)}</p>`).join('')}<div class="s">OPERATION HEAD<br>R.K. Industries- IV</div></body></html>`}
+async function dlMemo(m){const dl=await cap('downloads');if(!dl)return;try{await dl.save({filename:`Memo_${m.emp}_${new Date(m.issued).toISOString().slice(0,10)}.html`,data:memoHTML(m)})}catch(e){}}
+let mq='';
+function memoList(){const q=mq.trim().toLowerCase(),L=[...S.memos].reverse().filter(m=>!q||m.emp.toLowerCase().includes(q)||m.name.toLowerCase().includes(q));
+ const g={};S.memos.forEach(m=>{(g[m.emp]=g[m.emp]||{n:m.name,t:0,o:0}).t++;if(!m.closedAt)g[m.emp].o++});
+ const cl=L.filter(m=>m.closedAt),av=cl.length?dur(0,cl.reduce((a,m)=>a+m.closedAt-m.issued,0)/cl.length):'–';
+ const top=`<input placeholder="🔍 Search by Employee ID or name" value="${esc(mq)}" onchange="mq=this.value;draw()">`+
+ (q?`<div class="card"><b>${L.length} memo(s)</b> for “${esc(mq)}”<div class="mu">Open: ${L.length-cl.length} · Closed: ${cl.length} · Average closing time: ${av}</div></div>`:
+ (S.memos.length?`<div class="card"><b>Memos by Employee ID</b>${Object.entries(g).map(([id,v])=>`<div class="row" style="justify-content:space-between;margin-top:6px" onclick="mq='${esc(id)}';draw()"><span>${esc(id)} · ${esc(v.n)}</span><span class="tag ${v.o?'Open':'Closed'}">${v.t} memo${v.t>1?'s':''}${v.o?' · '+v.o+' open':''}</span></div>`).join('')}</div>`:''));
+ return top+(L.length?`<div class="row" style="margin:0 0 6px"><button class="b" onclick="dlReg('html')">🖨 Print register</button><button class="b g" onclick="dlReg('xlsx')">Register Excel</button></div>`:'')+(L.length?L.map(m=>{const o=S.obs.find(x=>x.id==m.obsId);return `<div class="card"><b>${esc(m.name)}</b> <span class="mu">${esc(m.emp)} · ${esc(m.dept)}</span>
+ <div class="mu">${esc(o?.issue||'')}</div><div class="mu">Issued ${new Date(m.issued).toLocaleString('en-GB')}</div>
+ <div style="margin-top:6px"><span class="tag ${m.closedAt?'Closed':'Open'}">${m.closedAt?'Closed':'Open – running'}</span> <b>${m.closedAt?'Took ':'Elapsed '}${dur(m.issued,m.closedAt)}</b></div>
+ <div class="row"><button class="b g" onclick="dlMemo(S.memos.find(x=>x.id=='${m.id}'))">🖨 Print / download memo</button>${m.closedAt?'':`<button class="b" onclick="closeMemo('${m.id}')">Mark closed</button>`}</div></div>`}).join(''):'<p class="mu">No memos issued yet. Open an observation and tap “Issue memo”.</p>')}
+function closeMemo(id){S.memos.find(x=>x.id==id).closedAt=Date.now();save();draw()}
+
+/* ---------- Excel ---------- */
+function expView(){const n=S.obs.filter(o=>o.date==fd).length;return `<div class="card"><b>Daily Excel report</b><label>Report date</label><input type="date" value="${fd}" onchange="fd=this.value;draw()">
+ <p class="mu">${n} observation(s) on this date.</p><button class="b" onclick="xl()">Download Excel</button></div>`}
+async function xl(){const L=S.obs.filter(o=>o.date==fd);if(!L.length)return alert('No observations on this date.');
+ const dl=await cap('downloads');if(!dl)return alert('Download is not available in this view.');
+ const wb=new ExcelJS.Workbook(),ws=wb.addWorksheet('EHS '+fd);
+ ws.columns=[['S. No',6],['Area of Inspection',20],['Before image',24],['Issue',24],['Description',38],['Action to be taken',34],['Responsible person',18],['Signature',14],['After Image',24],['Complete date',14],['Status',12]].map(([header,width])=>({header,width}));
+ ws.getRow(1).font={bold:true};ws.getRow(1).fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFD9EAD3'}};
+ const im=(u,c,r)=>{if(u)ws.addImage(wb.addImage({base64:u,extension:'jpeg'}),{tl:{col:c+.05,row:r+.05},ext:{width:150,height:120}})};
+ L.forEach((o,i)=>{const r=ws.addRow([i+1,o.area,'',o.issue,o.desc,o.action,o.person,'','',dmy(o.due),o.status]);r.height=96;im(o.before,2,i+1);im(o.after,8,i+1)});
+ ws.eachRow(r=>r.eachCell({includeEmpty:true},c=>{c.alignment={wrapText:true,vertical:'middle'};c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}}}));
+ try{await dl.save({filename:`EHS_Daily_Report_${fd}.xlsx`,data:await wb.xlsx.writeBuffer()})}catch(e){if(e.code!='declined')alert('Could not save: '+(e.message||e.code))}}
+/* ---------- Memo register ---------- */
+const rrows=()=>S.memos.map((m,i)=>{const o=S.obs.find(x=>x.id==m.obsId)||{};return [i+1,new Date(m.issued).toLocaleDateString('en-GB'),m.name,m.emp,m.dept,o.area||'',o.issue||'',new Date(m.issued).toLocaleString('en-GB'),m.closedAt?new Date(m.closedAt).toLocaleString('en-GB'):'',dur(m.issued,m.closedAt),m.closedAt?'Closed':'Open','']});
+const RH=['S. No','Memo date','Employee name','Employee ID','Section / Department','Area','Issue','Issued on','Closed on','Time taken','Status','Employee signature'];
+async function dlReg(t){if(!S.memos.length)return alert('No memos issued yet.');const dl=await cap('downloads');if(!dl)return alert('Download is not available in this view.');const d=loc();
+ try{if(t=='html'){const h=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Memo Register</title><style>@page{size:landscape}body{font:12px sans-serif;margin:16px}h3{text-align:center;margin:2px}table{border-collapse:collapse;width:100%;margin-top:10px}td,th{border:1px solid #000;padding:5px;vertical-align:top}th{background:#d9ead3}.np{padding:10px 18px;font-size:16px}@media print{.np{display:none}}</style></head><body><button class="np" onclick="print()">🖨 Print register</button><h3>R.K. INDUSTRIES - IV, PALLAVARAM</h3><h3>MEMO REGISTER</h3><table><tr>${RH.map(x=>`<th>${x}</th>`).join('')}</tr>${rrows().map(r=>`<tr>${r.map(x=>`<td>${esc(x)}</td>`).join('')}</tr>`).join('')}</table></body></html>`;await dl.save({filename:`Memo_Register_${d}.html`,data:h})}
+ else{const wb=new ExcelJS.Workbook(),ws=wb.addWorksheet('Memo Register');ws.columns=RH.map((header,i)=>({header,width:[6,12,20,12,20,18,30,20,20,14,10,20][i]}));ws.getRow(1).font={bold:true};rrows().forEach(r=>ws.addRow(r));
+  ws.eachRow(r=>r.eachCell({includeEmpty:true},c=>{c.alignment={wrapText:true,vertical:'middle'};c.border={top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}}}));
+  await dl.save({filename:`Memo_Register_${d}.xlsx`,data:await wb.xlsx.writeBuffer()})}}catch(e){if(e.code!='declined')alert('Could not save: '+(e.message||e.code))}}
+draw();
+</script></body></html>
